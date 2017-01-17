@@ -3,6 +3,34 @@ import { connect } from 'react-redux';
 import { fetchPoll, sendVote, addNewOption, deletePoll } from '../actions/index';
 import { Link } from 'react-router';
 import {Pie} from 'react-chartjs-2';
+import {
+  ShareButtons,
+  ShareCounts,
+  generateShareIcon,
+} from 'react-share';
+
+const {
+  FacebookShareButton,
+  GooglePlusShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  PinterestShareButton,
+  VKShareButton,
+} = ShareButtons;
+
+const {
+  FacebookShareCount,
+  GooglePlusShareCount,
+  LinkedinShareCount,
+  PinterestShareCount,
+} = ShareCounts;
+
+const FacebookIcon = generateShareIcon('facebook');
+const TwitterIcon = generateShareIcon('twitter');
+const GooglePlusIcon = generateShareIcon('google');
+const LinkedinIcon = generateShareIcon('linkedin');
+const PinterestIcon = generateShareIcon('pinterest');
+const VKIcon = generateShareIcon('vk');
 
 
 class PollShow extends Component {
@@ -161,9 +189,76 @@ class PollShow extends Component {
       </form>)
   }
 
+
+  renderRSButtons() {
+    const shareUrl = 'http://github.com';
+    const title = 'GitHub';
+
+       return (
+      <div className="Demo__container">
+      <div className="row">
+        <div className="col-sm-3">
+        <div className="Demo__some-network">
+          <FacebookShareButton
+            url={shareUrl}
+            title={title}
+            className="Demo__some-network__share-button">
+            <FacebookIcon
+              size={32}
+              round />
+          </FacebookShareButton>
+
+          <FacebookShareCount
+            url={shareUrl}
+            className="Demo__some-network__share-count">
+            {count => count}
+          </FacebookShareCount>
+        </div>
+        </div>
+        
+        <div className="col-sm-3">
+        <div className="Demo__some-network">
+          <TwitterShareButton
+            url={shareUrl}
+            title={title}
+            className="Demo__some-network__share-button">
+            <TwitterIcon
+              size={32}
+              round />
+          </TwitterShareButton>
+
+          <div className="Demo__some-network__share-count">
+            &nbsp;
+          </div>
+        </div>
+        </div>
+        
+        <div className="col-sm-3">
+        <div className="Demo__some-network">
+          <LinkedinShareButton
+            url={shareUrl}
+            title={title}
+            windowWidth={750}
+            windowHeight={600}
+            className="Demo__some-network__share-button">
+            <LinkedinIcon
+              size={32}
+              round />
+          </LinkedinShareButton>
+
+          <LinkedinShareCount
+            url={shareUrl}
+            className="Demo__some-network__share-count">
+            {count => count}
+          </LinkedinShareCount>
+        </div>
+        </div>
+      </div>
+    </div>
+    );
+  }
+
   //----------------------------------------------------------------------------
-
-
   render() {
     const { poll, user } = this.props;
 
@@ -177,12 +272,15 @@ class PollShow extends Component {
         <Link to="/polls">Back To Index</Link>
         <h3>{poll.tittle}</h3>
         <div className="row">
-        <div className="col-sm-4">{this.enterVote()}</div>
+        <div className="col-sm-4">
+          {this.enterVote()}
+          <br/>
+          {this.renderRSButtons()}
+        </div>
         <div className="col-sm-8">{this.renderPollPieChart()}</div>
         </div>
         <div>
-          <button className="btn"> <a className="twitter-share-button" href="https://twitter.com/intent/tweet?text=Hello%20world" data-size="large">
-          Tweet </a></button>
+
         </div>
       </div>
     );
